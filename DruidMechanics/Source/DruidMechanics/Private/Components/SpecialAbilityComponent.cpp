@@ -115,6 +115,7 @@ void USpecialAbilityComponent::PerformAbility()
 	// reduce charge value 
 	ReduceChargeValue();
 	// perform ability
+	bIsAbilityCurrentlyPerforming = true;
 	OnAbilityPerformedDelegate.Broadcast();
 }
 
