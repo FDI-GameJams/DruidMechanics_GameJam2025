@@ -2,6 +2,7 @@
 
 
 #include "Components/SpecialAbilityComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values for this component's properties
 USpecialAbilityComponent::USpecialAbilityComponent()
@@ -10,6 +11,7 @@ USpecialAbilityComponent::USpecialAbilityComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+	CurrentCharges = MaxCharges;
 	
 }
 
@@ -77,7 +79,7 @@ void USpecialAbilityComponent::SetAffectableAreaValue(bool Value)
 
 bool USpecialAbilityComponent::CanPerformAbility() const
 {
-	return bIsWithinRange;
+	return bIsWithinRange && (CurrentCharges > 0);
 }
 
 void USpecialAbilityComponent::PerformAbility()
@@ -87,5 +89,20 @@ void USpecialAbilityComponent::PerformAbility()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, CanPerformAbility() ? TEXT("True") : TEXT("False"));
 	}
+}
+
+void USpecialAbilityComponent::RechargeAbility(int Value)
+{
+	if (Value < 0)
+	{
+		return;
+	}
+
+	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges + Value, 0, MaxCharges);
+}
+
+void USpecialAbilityComponent::ReduceChargeValue()
+{
+	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges - 1, 0, MaxCharges);
 }
 

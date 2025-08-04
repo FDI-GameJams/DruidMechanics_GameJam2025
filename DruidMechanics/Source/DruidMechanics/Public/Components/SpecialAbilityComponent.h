@@ -38,6 +38,11 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Special Ability")
 	void PerformAbility();
 
+	UFUNCTION(BlueprintCallable, Category = "Special Ability")
+	void RechargeAbility(int Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Special Ability")
+	void ReduceChargeValue();
 
 public:
 	// Sets default values for this component's properties
