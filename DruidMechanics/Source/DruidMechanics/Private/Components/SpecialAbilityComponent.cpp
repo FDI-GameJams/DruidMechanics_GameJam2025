@@ -10,7 +10,7 @@ USpecialAbilityComponent::USpecialAbilityComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	
 }
 
 
@@ -19,7 +19,7 @@ void USpecialAbilityComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	
 	
 }
 
@@ -29,6 +29,63 @@ void USpecialAbilityComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	
+}
+
+
+int USpecialAbilityComponent::GetCurrentChargesValue() const
+{
+	return CurrentCharges;
+}
+
+int USpecialAbilityComponent::GetMaxChargesValue() const
+{
+	return MaxCharges;
+}
+
+bool USpecialAbilityComponent::GetWithinRangeValue() const
+{
+	return bIsWithinRange;
+}
+
+bool USpecialAbilityComponent::GetAffectableAreaValue() const
+{
+	return bIsAffectableArea;
+}
+
+
+void USpecialAbilityComponent::SetMaxChargesValue(int Value)
+{
+	if (Value < 0)
+	{
+		MaxCharges = 0;
+		return;
+	}
+
+	MaxCharges = Value;
+}
+
+void USpecialAbilityComponent::SetWithinRangeValue(bool Value)
+{
+	bIsWithinRange = Value;
+}
+
+void USpecialAbilityComponent::SetAffectableAreaValue(bool Value)
+{
+	bIsAffectableArea = Value;
+}
+
+bool USpecialAbilityComponent::CanPerformAbility() const
+{
+	return bIsWithinRange;
+}
+
+void USpecialAbilityComponent::PerformAbility()
+{
+	// Check if we can perfom the ability
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, CanPerformAbility() ? TEXT("True") : TEXT("False"));
+	}
 }
 
