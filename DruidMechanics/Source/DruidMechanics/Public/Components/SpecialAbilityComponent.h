@@ -6,6 +6,12 @@
 #include "Components/ActorComponent.h"
 #include "SpecialAbilityComponent.generated.h"
 
+// EVENTS
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE(
+	FOnAbilityPerformedSignature,
+	USpecialAbilityComponent,
+	OnAbilityPerformedDelegate
+);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class DRUIDMECHANICS_API USpecialAbilityComponent : public UActorComponent
@@ -25,6 +31,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintGetter = GetAffectableAreaValue, BlueprintSetter = SetAffectableAreaValue, Category = "Special Ability")
 	bool bIsAffectableArea{ false };
+
+	UPROPERTY(VisibleAnywhere, BlueprintGetter = GetIsAbilityCurrentlyPerformingValue, BlueprintSetter = SetIsAbilityCurrentlyPerformingValue, Category = "Special Ability")
+	bool bIsAbilityCurrentlyPerforming{ false };
 
 
 protected:
@@ -64,6 +73,9 @@ public:
 	UFUNCTION(BlueprintPure, BlueprintGetter, Category = "Special Ability")
 	bool GetAffectableAreaValue() const;
 
+	UFUNCTION(BlueprintPure, BlueprintGetter, Category = "Special Ability")
+	bool GetIsAbilityCurrentlyPerformingValue() const;
+
 	// MUTABLES/SETTERS
 	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Special Ability")
 	void SetMaxChargesValue(int Value);
@@ -74,7 +86,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Special Ability")
 	void SetAffectableAreaValue(bool Value);
 
+	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Special Ability")
+	void SetIsAbilityCurrentlyPerformingValue(bool Value);
 
-
+	// event to broadcast when ability is used
+	UPROPERTY(BlueprintAssignable, Category = "Special Ability")
+	FOnAbilityPerformedSignature OnAbilityPerformedDelegate;
 
 };

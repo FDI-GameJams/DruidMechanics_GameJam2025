@@ -21,7 +21,12 @@ void USpecialAbilityComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, 
+			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
+		);
+	}
 	
 }
 
@@ -55,6 +60,11 @@ bool USpecialAbilityComponent::GetAffectableAreaValue() const
 	return bIsAffectableArea;
 }
 
+bool USpecialAbilityComponent::GetIsAbilityCurrentlyPerformingValue() const
+{
+	return bIsAbilityCurrentlyPerforming;
+}
+
 
 void USpecialAbilityComponent::SetMaxChargesValue(int Value)
 {
@@ -77,9 +87,16 @@ void USpecialAbilityComponent::SetAffectableAreaValue(bool Value)
 	bIsAffectableArea = Value;
 }
 
+void USpecialAbilityComponent::SetIsAbilityCurrentlyPerformingValue(bool Value)
+{
+	bIsAbilityCurrentlyPerforming = Value;
+}
+
 bool USpecialAbilityComponent::CanPerformAbility() const
 {
-	return bIsWithinRange && (CurrentCharges > 0);
+	// also check if ability is being used
+	// --> there's a delay between performing ability, changes taking place, and finishing performing ability
+	return bIsWithinRange && (CurrentCharges > 0) && (!bIsAbilityCurrentlyPerforming);
 }
 
 void USpecialAbilityComponent::PerformAbility()
@@ -89,6 +106,16 @@ void USpecialAbilityComponent::PerformAbility()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, CanPerformAbility() ? TEXT("True") : TEXT("False"));
 	}
+
+	if (!CanPerformAbility())
+	{
+		return;
+	}
+
+	// reduce charge value 
+	ReduceChargeValue();
+	// perform ability
+	OnAbilityPerformedDelegate.Broadcast();
 }
 
 void USpecialAbilityComponent::RechargeAbility(int Value)
@@ -99,10 +126,24 @@ void USpecialAbilityComponent::RechargeAbility(int Value)
 	}
 
 	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges + Value, 0, MaxCharges);
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green,
+			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
+		);
+	}
 }
 
 void USpecialAbilityComponent::ReduceChargeValue()
 {
 	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges - 1, 0, MaxCharges);
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green,
+			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
+		);
+	}
 }
 
