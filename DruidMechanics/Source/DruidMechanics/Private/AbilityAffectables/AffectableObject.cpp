@@ -44,6 +44,11 @@ int AAffectableObject::GetReactionIDValue() const
 	return ReactionID;
 }
 
+int AAffectableObject::GetMaxReactionID() const
+{
+	return MaxReactionID;
+}
+
 void AAffectableObject::SetReactionIDValue(int Value)
 {
 	if (Value < 0)
@@ -53,6 +58,17 @@ void AAffectableObject::SetReactionIDValue(int Value)
 	}
 
 	ReactionID = Value;
+}
+
+void AAffectableObject::SetMaxReactionID(int Value)
+{
+	if (Value < 0)
+	{
+		MaxReactionID = 0;
+		return;
+	}
+
+	MaxReactionID = Value;
 }
 
 void AAffectableObject::SetIsHiddenInGameValue(bool Value)
@@ -78,7 +94,7 @@ void AAffectableObject::ToggleVisibility(int ID)
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, TEXT("Toggled Visibility"));
 	}
 
-	SetActorHiddenInGame(!bIsHiddenInGame);
-	SetActorEnableCollision(!bIsCollisionEnabled);
+	this->SetActorHiddenInGame(!bIsHiddenInGame);
+	this->SetActorEnableCollision(!bIsCollisionEnabled);
 }
 

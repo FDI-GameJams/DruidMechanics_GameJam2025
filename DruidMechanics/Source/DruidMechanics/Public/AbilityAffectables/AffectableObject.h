@@ -13,13 +13,15 @@ class DRUIDMECHANICS_API AAffectableObject : public AActor, public IAbilityReact
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintGetter = GetReactionIDValue, BlueprintSetter = SetReactionIDValue, Category = "Ability Reaction")
+	UPROPERTY(EditAnywhere, BlueprintGetter = GetReactionIDValue, BlueprintSetter = SetReactionIDValue, Category = "Ability Reaction")
 	int ReactionID{ 0 };
+	UPROPERTY(VisibleAnywhere, BlueprintGetter = GetMaxReactionID, BlueprintSetter = SetMaxReactionID, Category = "Ability Reaction")
+	int MaxReactionID{ 3 };
 
-	UPROPERTY(VisibleAnywhere, BlueprintSetter = SetIsHiddenInGameValue, Category = "Ability Reaction")
+	UPROPERTY(EditAnywhere, BlueprintSetter = SetIsHiddenInGameValue, Category = "Ability Reaction")
 	bool bIsHiddenInGame{ false };
 
-	UPROPERTY(VisibleAnywhere, BlueprintSetter = SetIsCollisionEnabledValue, Category = "Ability Reaction")
+	UPROPERTY(EditAnywhere, BlueprintSetter = SetIsCollisionEnabledValue, Category = "Ability Reaction")
 	bool bIsCollisionEnabled{ true };
 
 protected:
@@ -43,9 +45,15 @@ public:
 	UFUNCTION(BlueprintPure, BlueprintGetter, Category = "Ability Reaction")
 	int GetReactionIDValue() const;
 
+	UFUNCTION(BlueprintPure, BlueprintGetter, Category = "Ability Reaction")
+	int GetMaxReactionID() const;
+
 	// MUTATORS/SETTERS 
 	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Ability Reaction")
 	void SetReactionIDValue(int Value);
+
+	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Ability Reaction")
+	void SetMaxReactionID(int Value);
 
 	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Ability Reaction")
 	void SetIsHiddenInGameValue(bool Value);
