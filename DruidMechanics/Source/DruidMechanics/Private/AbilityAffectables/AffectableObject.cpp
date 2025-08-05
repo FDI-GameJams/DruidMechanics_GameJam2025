@@ -9,6 +9,17 @@ AAffectableObject::AAffectableObject()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// Initialize default root component
+	DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Default Root Component"));
+	SetRootComponent(DefaultRootComponent);
+
+	// Initialize static mesh component
+	AffectableObjectMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Affectable Object Mesh"));
+	AffectableObjectMesh->SetupAttachment(GetRootComponent());
+
+	// Initialize state of affectable object
+	this->SetActorHiddenInGame(bIsHiddenInGame);
+	this->SetActorEnableCollision(bIsCollisionEnabled);
 }
 
 // Called when the game starts or when spawned
@@ -23,5 +34,43 @@ void AAffectableObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+int AAffectableObject::GetReactionIDValue() const
+{
+	return ReactionID;
+}
+
+void AAffectableObject::SetReactionIDValue(int Value)
+{
+	if (Value < 0)
+	{
+		ReactionID = 0;
+		return;
+	}
+
+	ReactionID = Value;
+}
+
+void AAffectableObject::SetIsHiddenInGameValue(bool Value)
+{
+	bIsHiddenInGame = Value;
+}
+
+void AAffectableObject::SetIsCollisionEnabledValue(bool Value)
+{
+	bIsCollisionEnabled = Value;
+}
+
+void AAffectableObject::ToggleVisibility(int ID)
+{
+	// if it's not affectable object's turn to toggle visibility, return early
+	if (ID != ReactionID)
+	{
+		return;
+	}
+
+	this->SetActorHiddenInGame(!bIsHiddenInGame);
+	this->SetActorEnableCollision(!bIsCollisionEnabled);
 }
 

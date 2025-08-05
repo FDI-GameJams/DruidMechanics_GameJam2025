@@ -68,13 +68,23 @@ void AAffectableArea::SetMaxIterationValue(int Value)
 void AAffectableArea::AddAffectableObject(AAffectableObject* Object)
 {
 	// add affectable object to array
+	AffectableObjectsList.AddUnique(Object);
 }
 
 // This function gets called when Special Ability is used (Listen to event from SpecialAbilityComponent)
 void AAffectableArea::ChangeSpaceLayout()
 {
 	// This is where we address all affectable objects and send the message to toggle visibility based on iteration value
+	for (AAffectableObject* Object : AffectableObjectsList)
+	{
+		if (Object->Implements<UAbilityReaction>())
+		{
+			Object->ToggleVisibility(CurrentIteration);
+		}
+	}
+
 	// call rotate current iteration to change ID to send next time special ability is used
+	RotateCurrentIteration();
 }
 
 void AAffectableArea::RotateCurrentIteration()
