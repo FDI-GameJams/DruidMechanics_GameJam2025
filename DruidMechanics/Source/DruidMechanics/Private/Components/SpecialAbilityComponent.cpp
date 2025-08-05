@@ -101,17 +101,8 @@ bool USpecialAbilityComponent::CanPerformAbility() const
 
 void USpecialAbilityComponent::PerformAbility()
 {
-	// Check if we can perfom the ability
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, CanPerformAbility() ? TEXT("True") : TEXT("False"));
-	}
-
-	if (!CanPerformAbility())
-	{
-		return;
-	}
-
+	// Checking if can perform ability in blueprints
+	
 	// reduce charge value 
 	ReduceChargeValue();
 	// perform ability
