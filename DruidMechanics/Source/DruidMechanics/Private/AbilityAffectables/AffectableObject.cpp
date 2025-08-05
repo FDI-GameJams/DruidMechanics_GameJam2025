@@ -18,6 +18,9 @@ AAffectableObject::AAffectableObject()
 	AffectableObjectMesh->SetupAttachment(GetRootComponent());
 
 	// Initialize state of affectable object
+	bIsHiddenInGame = true;
+	bIsCollisionEnabled = false;
+
 	this->SetActorHiddenInGame(bIsHiddenInGame);
 	this->SetActorEnableCollision(bIsCollisionEnabled);
 }
@@ -70,7 +73,12 @@ void AAffectableObject::ToggleVisibility(int ID)
 		return;
 	}
 
-	this->SetActorHiddenInGame(!bIsHiddenInGame);
-	this->SetActorEnableCollision(!bIsCollisionEnabled);
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, TEXT("Toggled Visibility"));
+	}
+
+	SetActorHiddenInGame(!bIsHiddenInGame);
+	SetActorEnableCollision(!bIsCollisionEnabled);
 }
 
