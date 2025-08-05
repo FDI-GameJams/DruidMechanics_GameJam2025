@@ -19,7 +19,7 @@ AAffectableObject::AAffectableObject()
 
 	// Initialize state of affectable object
 	bIsHiddenInGame = true;
-	bIsCollisionEnabled = false;
+	bIsCollisionEnabled = !bIsHiddenInGame;
 
 	this->SetActorHiddenInGame(bIsHiddenInGame);
 	this->SetActorEnableCollision(bIsCollisionEnabled);
