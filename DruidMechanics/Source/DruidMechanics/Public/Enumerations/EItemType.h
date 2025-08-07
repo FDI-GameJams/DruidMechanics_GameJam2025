@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "EItemType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum EItemType
 {
 	NONE UMETA(DisplayName = "None"),
