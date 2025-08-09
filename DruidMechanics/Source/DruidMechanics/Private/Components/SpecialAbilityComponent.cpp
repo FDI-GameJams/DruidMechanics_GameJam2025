@@ -21,12 +21,12 @@ void USpecialAbilityComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GEngine)
+	/*if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, 
 			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
 		);
-	}
+	}*/
 	
 }
 

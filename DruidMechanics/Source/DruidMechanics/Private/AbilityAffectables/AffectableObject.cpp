@@ -89,10 +89,10 @@ void AAffectableObject::ToggleVisibility(int ID)
 		return;
 	}
 
-	if (GEngine)
+	/*if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, TEXT("Toggled Visibility"));
-	}
+	}*/
 
 	this->SetActorHiddenInGame(!bIsHiddenInGame);
 	this->SetActorEnableCollision(!bIsCollisionEnabled);
