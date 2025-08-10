@@ -20,13 +20,6 @@ USpecialAbilityComponent::USpecialAbilityComponent()
 void USpecialAbilityComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, 
-			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
-		);
-	}
 	
 }
 
@@ -118,24 +111,10 @@ void USpecialAbilityComponent::RechargeAbility(int Value)
 	}
 
 	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges + Value, 0, MaxCharges);
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green,
-			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
-		);
-	}
 }
 
 void USpecialAbilityComponent::ReduceChargeValue()
 {
 	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges - 1, 0, MaxCharges);
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green,
-			FString::Printf(TEXT("Charges = %d"), CurrentCharges)
-		);
-	}
 }
 

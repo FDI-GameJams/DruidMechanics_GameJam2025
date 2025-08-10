@@ -26,7 +26,7 @@ AAffectableArea::AAffectableArea()
 	SpecialAbilityComponent->SetAffectableAreaValue(true);
 
 	// Set the max iteration value to the max number of times ability can be performed for consistency
-	MaxIteration = SpecialAbilityComponent->GetMaxChargesValue() - 1;
+	//MaxIteration = SpecialAbilityComponent->GetMaxChargesValue() - 1;
 
 }
 
@@ -81,13 +81,6 @@ void AAffectableArea::ChangeSpaceLayout()
 		{
 			Object->ToggleVisibility(CurrentIteration);
 		}
-	}
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, 
-			FString::Printf(TEXT("Iteration = %d"), CurrentIteration)
-		);
 	}
 
 	// call rotate current iteration to change ID to send next time special ability is used
