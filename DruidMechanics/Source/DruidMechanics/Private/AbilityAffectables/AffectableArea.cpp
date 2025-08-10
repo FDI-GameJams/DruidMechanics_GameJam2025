@@ -83,13 +83,6 @@ void AAffectableArea::ChangeSpaceLayout()
 		}
 	}
 
-	/*if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, 
-			FString::Printf(TEXT("Iteration = %d"), CurrentIteration)
-		);
-	}*/
-
 	// call rotate current iteration to change ID to send next time special ability is used
 	RotateCurrentIteration();
 }
