@@ -110,11 +110,21 @@ void USpecialAbilityComponent::RechargeAbility(int Value)
 		return;
 	}
 
+	if (CurrentCharges >= MaxCharges)
+	{
+		return; // No need to recharge if already at max
+	}
+
 	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges + Value, 0, MaxCharges);
 }
 
 void USpecialAbilityComponent::ReduceChargeValue()
 {
 	CurrentCharges = UKismetMathLibrary::FClamp(CurrentCharges - 1, 0, MaxCharges);
+}
+
+bool USpecialAbilityComponent::CanRechargeAbility() const
+{
+	return !(CurrentCharges >= MaxCharges);
 }
 
