@@ -14,8 +14,12 @@ AAffectableObject::AAffectableObject()
 	SetRootComponent(DefaultRootComponent);
 
 	// Initialize static mesh component
-	AffectableObjectMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Affectable Object Mesh"));
-	AffectableObjectMesh->SetupAttachment(GetRootComponent());
+	ObjectMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Object Mesh Component"));
+	ObjectMeshComponent->SetupAttachment(GetRootComponent());
+
+	// Set Mesh of StaticMeshComponent to ObjectMesh (of type static mesh)
+	// for some reason, this does not work in Blueprint
+	ObjectMeshComponent->SetStaticMesh(ObjectMesh);
 
 	// Initialize state of affectable object
 	bIsHiddenInGame = true;
@@ -49,6 +53,11 @@ int AAffectableObject::GetMaxReactionID() const
 	return MaxReactionID;
 }
 
+UStaticMesh* AAffectableObject::GetObjectMesh() const
+{
+	return ObjectMesh;
+}
+
 void AAffectableObject::SetReactionIDValue(int Value)
 {
 	if (Value < 0)
@@ -79,6 +88,11 @@ void AAffectableObject::SetIsHiddenInGameValue(bool Value)
 void AAffectableObject::SetIsCollisionEnabledValue(bool Value)
 {
 	bIsCollisionEnabled = Value;
+}
+
+void AAffectableObject::SetObjectMesh(UStaticMesh* Mesh)
+{
+	ObjectMesh = Mesh;
 }
 
 void AAffectableObject::ToggleVisibility(int ID)
