@@ -53,6 +53,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Special Ability")
 	void ReduceChargeValue();
 
+	UFUNCTION(BlueprintPure, Category = "Special Ability")
+	bool CanRechargeAbility() const;
+
 public:
 	// Sets default values for this component's properties
 	USpecialAbilityComponent();
