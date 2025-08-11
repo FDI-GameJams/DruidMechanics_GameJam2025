@@ -103,6 +103,13 @@ void AAffectableObject::ToggleVisibility(int ID)
 		return;
 	}
 
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
+			FString::Printf(TEXT("Toggling visibility for %s with ID: %d"), *GetName(), ID)
+		);
+	}
+
 	this->SetActorHiddenInGame(!bIsHiddenInGame);
 	this->SetActorEnableCollision(!bIsCollisionEnabled);
 }
