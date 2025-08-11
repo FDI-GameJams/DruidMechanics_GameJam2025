@@ -24,15 +24,19 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintSetter = SetIsCollisionEnabledValue, Category = "Ability Reaction")
 	bool bIsCollisionEnabled{ true };
 
+	UPROPERTY(EditAnywhere, BlueprintGetter = GetObjectMesh, BlueprintSetter = SetObjectMesh, Category = "Affectable Object")
+	UStaticMesh* ObjectMesh{ nullptr };
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Affectable Object")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Affectable Object")
 	USceneComponent* DefaultRootComponent{ nullptr };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Affectable Object")
-	UStaticMeshComponent* AffectableObjectMesh{ nullptr };
+	UStaticMeshComponent* ObjectMeshComponent{ nullptr };
+
 
 public:	
 	// Sets default values for this actor's properties
@@ -48,6 +52,9 @@ public:
 	UFUNCTION(BlueprintPure, BlueprintGetter, Category = "Ability Reaction")
 	int GetMaxReactionID() const;
 
+	UFUNCTION(BlueprintPure, BlueprintGetter, Category = "Affectable Object")
+	UStaticMesh* GetObjectMesh() const;
+
 	// MUTATORS/SETTERS 
 	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Ability Reaction")
 	void SetReactionIDValue(int Value);
@@ -60,6 +67,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Ability Reaction")
 	void SetIsCollisionEnabledValue(bool Value);
+
+	UFUNCTION(BlueprintCallable, BlueprintSetter, Category = "Affectable Object")
+	void SetObjectMesh(UStaticMesh* Mesh);
 
 	// Interface function
 	virtual void ToggleVisibility(int ID) override;
